@@ -2,45 +2,44 @@ using System;
 
 class Program
 {
+    static double notaMinima = 11;
+
     static void Main(string[] args)
     {
-        string claveCorrecta = "upn2026";
-        int maxIntentos = 3;
-        int intentos = 0;
-        bool acceso = false;
+        Console.Write("Ingrese la nota 1: ");
+        double nota1 = Convert.ToDouble(Console.ReadLine());
 
-        string clave;
+        Console.Write("Ingrese la nota 2: ");
+        double nota2 = Convert.ToDouble(Console.ReadLine());
 
-        do
+        Console.Write("Ingrese la nota 3: ");
+        double nota3 = Convert.ToDouble(Console.ReadLine());
+
+        double promedio = CalcularPromedio(nota1, nota2, nota3);
+
+        string estado = VerificarEstado(promedio);
+
+        Console.WriteLine("\n--- REPORTE ---");
+        Console.WriteLine("Promedio: " + promedio.ToString("F2"));
+        Console.WriteLine("Estado: " + estado);
+
+        Console.ReadKey();
+    }
+
+    static double CalcularPromedio(double n1, double n2, double n3)
+    {
+        return (n1 + n2 + n3) / 3;
+    }
+
+    static string VerificarEstado(double promedio)
+    {
+        if (promedio >= notaMinima)
         {
-            intentos += 1;
-
-            Console.Write($"Intento {intentos}/{maxIntentos} - Clave: ");
-            clave = Console.ReadLine();
-
-            if (clave == claveCorrecta)
-            {
-                acceso = true;
-            }
-            else
-            {
-                int restantes = maxIntentos - intentos;
-
-                if (restantes > 0)
-                {
-                    Console.WriteLine($"Clave incorrecta. Quedan {restantes} intentos.");
-                }
-            }
-
-        } while (!acceso && intentos < maxIntentos);
-
-        if (acceso)
-        {
-            Console.WriteLine("Acceso concedido. Bienvenido.");
+            return "Aprobado";
         }
         else
         {
-            Console.WriteLine("Cuenta bloqueada. Contacte al administrador.");
+            return "Desaprobado";
         }
     }
 }

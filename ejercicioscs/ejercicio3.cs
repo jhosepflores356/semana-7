@@ -2,37 +2,35 @@ using System;
 
 class Program
 {
+    static double CalcularBruto(double horas)
+    {
+        return horas * 12.50;
+    }
+
+    static double CalcularDescuento(double bruto)
+    {
+        return bruto * 0.05;
+    }
+
+    static double CalcularNeto(double bruto, double descuento)
+    {
+        return bruto - descuento;
+    }
+
     static void Main(string[] args)
     {
-        int nota;
+        Console.Write("Ingrese las horas trabajadas: ");
+        double horas = Convert.ToDouble(Console.ReadLine());
 
-        do
-        {
-            Console.Write("Ingrese nota (0 - 20): ");
-            nota = int.Parse(Console.ReadLine());
+        double sueldoBruto = CalcularBruto(horas);
+        double descuento = CalcularDescuento(sueldoBruto);
+        double sueldoNeto = CalcularNeto(sueldoBruto, descuento);
 
-            if (nota < 0 || nota > 20)
-            {
-                Console.WriteLine("Error: nota debe ser entre 0 y 20.");
-            }
+        Console.WriteLine("\n--- BOLETA DE SUELDO ---");
+        Console.WriteLine("Sueldo bruto: S/ " + sueldoBruto.ToString("F2"));
+        Console.WriteLine("Descuento (5%): S/ " + descuento.ToString("F2"));
+        Console.WriteLine("Sueldo neto: S/ " + sueldoNeto.ToString("F2"));
 
-        } while (nota < 0 || nota > 20);
-
-        if (nota >= 18)
-        {
-            Console.WriteLine("Clasificación: EXCELENTE");
-        }
-        else if (nota >= 14)
-        {
-            Console.WriteLine("Clasificación: BUENO");
-        }
-        else if (nota >= 11)
-        {
-            Console.WriteLine("Clasificación: REGULAR");
-        }
-        else
-        {
-            Console.WriteLine("Clasificación: DESAPROBADO");
-        }
+        Console.ReadKey();
     }
 }

@@ -2,66 +2,47 @@ using System;
 
 class Program
 {
+    static double tipoCambio = 3.75;
+    static double porcentajeComision = 0.02;
+
     static void Main(string[] args)
     {
-        double subtotal = 0;
-        int totalArticulos = 0;
-        int opcion;
+        Console.WriteLine("=== CASA DE CAMBIO ===");
 
-        do
-        {
-            Console.WriteLine("\n--- TIENDA TECH ---");
-            Console.WriteLine("1. USB 32GB - S/25");
-            Console.WriteLine("2. Mouse inalámbrico - S/45");
-            Console.WriteLine("3. Audífonos - S/60");
-            Console.WriteLine("0. Finalizar compra");
+        Console.Write("Ingrese monto en soles: S/");
+        double soles = double.Parse(Console.ReadLine());
 
-            Console.Write("Opción: ");
-            opcion = int.Parse(Console.ReadLine());
+        double comision = CalcularComision(soles);
+        double solesNetos = CalcularSolesNetos(soles, comision);
+        double dolares = ConvertirADolares(solesNetos);
 
-            if (opcion >= 1 && opcion <= 3)
-            {
-                Console.Write("Cantidad: ");
-                int cantidad = int.Parse(Console.ReadLine());
+        MostrarComprobante(soles, comision, solesNetos, dolares);
+    }
 
-                double precio = 0;
+    static double CalcularComision(double soles)
+    {
+        double comision = soles * porcentajeComision;
+        return comision;
+    }
 
-                if (opcion == 1)
-                {
-                    precio = 25;
-                }
-                else if (opcion == 2)
-                {
-                    precio = 45;
-                }
-                else if (opcion == 3)
-                {
-                    precio = 60;
-                }
+    static double CalcularSolesNetos(double soles, double comision)
+    {
+        double solesNetos = soles - comision;
+        return solesNetos;
+    }
 
-                subtotal += precio * cantidad;
-                totalArticulos += cantidad;
-            }
-            else if (opcion != 0)
-            {
-                Console.WriteLine("Opción no válida.");
-            }
+    static double ConvertirADolares(double solesNetos)
+    {
+        double dolares = solesNetos / tipoCambio;
+        return dolares;
+    }
 
-        } while (opcion != 0);
-
-        double descuento = 0;
-
-        if (subtotal > 100)
-        {
-            descuento = subtotal * 0.10;
-        }
-
-        double total = subtotal - descuento;
-
-        Console.WriteLine("\n--- RESUMEN DE COMPRA ---");
-        Console.WriteLine($"Artículos: {totalArticulos}");
-        Console.WriteLine($"Subtotal: S/ {subtotal:F2}");
-        Console.WriteLine($"Descuento: S/ {descuento:F2}");
-        Console.WriteLine($"TOTAL: S/ {total:F2}");
+    static void MostrarComprobante(double soles, double comision, double solesNetos, double dolares)
+    {
+        Console.WriteLine("COMPROBANTE");
+        Console.WriteLine($"Monto ingresado: S/ {soles:F2}");
+        Console.WriteLine($"Comisión (2%): S/ {comision:F2}");
+        Console.WriteLine($"Soles netos a cambiar: S/ {solesNetos:F2}");
+        Console.WriteLine($"Dólares recibidos: $ {dolares:F2}");
     }
 }
